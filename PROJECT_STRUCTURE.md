@@ -1,7 +1,7 @@
 # X-ray Diagnosis System - Project Structure
 
 ```
-x_ray_doc/
+x_ray_ai/
 ├── 📁 api/                          # FastAPI routers
 │   ├── __init__.py
 │   ├── patients.py                  # Patient management endpoints

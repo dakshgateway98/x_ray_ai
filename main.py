@@ -1,21 +1,31 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-import os
 
 from api import patients, xray, books
 from db.database import engine
 from db import models
 
-# Create uploads directory if it doesn't exist
 os.makedirs("uploads", exist_ok=True)
 
-app = FastAPI(title="X-Ray Diagnosis API")
+app = FastAPI(
+    title="X-Ray Diagnosis API",
+    description="Demo RAG + vision pipeline for educational X-ray analysis. Not a medical device.",
+)
 
-# Add CORS middleware
+cors_origins = [
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000"
+    ).split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify your frontend URL
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
